@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:unifiedMaps="clr-namespace:fivenine.UnifiedMaps;assembly=UnifiedMap"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             x:Class="Exercice4.Views.Page2"
+             Title="UnifiedMaps Sample"
+             Appearing="OnAppearing">
+    <StackLayout>
+        <Label Text="{Binding CurrentPlace.Title}"></Label>
+        <Grid VerticalOptions="FillAndExpand">
+
+            <unifiedMaps:UnifiedMap
+                Grid.Row="0"
+                x:Name="Map"
+                Pins="{Binding Pins}"
+                Overlays="{Binding Overlays}"
+                VisibleRegionChangedCommand="{Binding VisibleRegionChangedCommand}"
+                MapType="{Binding MapDisplayType}" 
+                PinCalloutTappedCommand="{Binding PinSelectedCommand}"
+                IsShowingUser="{Binding IsShowingUserLocation}"
+                HasScrollEnabled="{Binding HasScrollEnabled}"
+                HasZoomEnabled="{Binding HasZoomEnabled}"
+                SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                CameraAnimationEnabled="{Binding CameraAnimationEnabled}"
+                IosSingleAnnotationZoom="0.01"
+                HeightRequest="100"
+                WidthRequest="960"
+                VerticalOptions="FillAndExpand" >
+            </unifiedMaps:UnifiedMap>
+
+            <BoxView VerticalOptions="Center" HorizontalOptions="FillAndExpand" HeightRequest="0.5" BackgroundColor="Black"   />
+            <BoxView VerticalOptions="FillAndExpand" HorizontalOptions="Center" WidthRequest="0.5" BackgroundColor="Black"  />
+
+        </Grid>
+        <StackLayout
+			Orientation="Horizontal"
+            HorizontalOptions="CenterAndExpand"
+            Spacing="30">
+            <StackLayout.Resources>
+                <ResourceDictionary>
+                    <sys:Int32 x:Key="Previous">-1</sys:Int32>
+                    <sys:Int32 x:Key="Next">-1</sys:Int32>
+                </ResourceDictionary>
+            </StackLayout.Resources>
+
+            <Button 
+				Text="Previous" 
+				Command="{Binding SelectCommand}"
+				CommandParameter="{StaticResource Previous}" 
+				/>
+
+            <Button 
+				Text="Next" 
+				Command="{Binding SelectCommand}"
+				CommandParameter="{StaticResource Next}" 
+				/>
+
+            <Button 
+				Text="Clear Selection" 
+				Command="{Binding ClearSelectionCommand}"
+				/>
+        </StackLayout>
+        <StackLayout 
+            Orientation="Horizontal"
+            HorizontalOptions="CenterAndExpand"
+            Spacing="30">
+
+            <Button Text="Street" Command="{Binding ChangeMapTypeCommand}" CommandParameter="{x:Static unifiedMaps:MapType.Street}" />
+            <Button Text="Satellite" Command="{Binding ChangeMapTypeCommand}" CommandParameter="{x:Static unifiedMaps:MapType.Satellite}" />
+            <Button Text="Hybrid" Command="{Binding ChangeMapTypeCommand}" CommandParameter="{x:Static unifiedMaps:MapType.Hybrid}" />
+
+        </StackLayout>
+    </StackLayout>
+</ContentPage>
